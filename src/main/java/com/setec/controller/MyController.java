@@ -65,6 +65,16 @@ public class MyController {
         return ResponseEntity.status(404)
                 .body(Map.of("message","Product id = "+id+ " not found"));
     }
+
+    @GetMapping("name/{name}")
+    public Object getByName(@PathVariable("name") String name) {
+        List<Product> pro = productRepo.findByName(name);
+        if(pro.size()>0) {
+            return pro;
+        }
+        return ResponseEntity.status(404)
+                .body(Map.of("message","Product name = "+name+ " not found"));
+    }
     
     @DeleteMapping({"{id}","id/{id}"})
     public Object deleteById(@PathVariable("id")Integer id) {
