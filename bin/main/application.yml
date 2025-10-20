@@ -1,35 +1,26 @@
 spring:
-  application:
-    name: product-web-api
-  jpa:
-    hibernate:
-      ddl-auto: update
-    show-sql: false
-    properties:
-      hibernate:
-        dialect: ${DB_DIALECT:org.hibernate.dialect.MySQLDialect}
-        format_sql: true
-    open-in-view: true
-  servlet:
-    multipart:
-      max-file-size: 50MB
-      max-request-size: 500MB
+  config:
+    activate:
+      on-profile: production
   datasource:
-    url: ${DATABASE_URL:jdbc:mysql://localhost:3306/dbsu6?createDatabaseIfNotExist=true&allowPublicKeyRetrieval=true&useSSL=false}
-    username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:}
-    driver-class-name: ${DB_DRIVER:com.mysql.cj.jdbc.Driver}
+    url: jdbc:postgresql://dpg-d3fn6bp5pdvs73be510g-a.oregon-postgres.render.com:5432/roth?sslmode=require
+    username: roth_user
+    password: ArTLhsNDeUNVYbabV93WNrQI0Og5rZUL
+    driver-class-name: org.postgresql.Driver
     hikari:
       maximum-pool-size: 5
       connection-timeout: 30000
-
-server:
-  port: ${PORT:8080}
-  error:
-    include-message: always
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        temp:
+          use_jdbc_metadata_defaults: false
 
 file:
-  upload-dir: ${FILE_UPLOAD_DIR:./uploads}
+  upload-dir: /tmp/uploads
 
 logging:
   level:

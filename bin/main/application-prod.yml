@@ -1,9 +1,9 @@
 spring:
   config:
     activate:
-      on-profile: production # This activates the profile
+      on-profile: production
   datasource:
-    url: jdbc:postgresql://roth_user:ArTLhsNDeUNVYbabV93WNrQI0Og5rZUL@dpg-d3fn6bp5pdvs73be510g-a/roth
+    url: jdbc:postgresql://dpg-d3fn6bp5pdvs73be510g-a.oregon-postgres.render.com:5432/roth?sslmode=require
     username: roth_user
     password: ArTLhsNDeUNVYbabV93WNrQI0Og5rZUL
     driver-class-name: org.postgresql.Driver
