@@ -66,16 +66,6 @@ public class MyController {
                 .body(Map.of("message","Product id = "+id+ " not found"));
     }
     
-    @GetMapping("name/{name}")
-    public Object getByName(@PathVariable("name") String name) {
-        List<Product> pro = productRepo.findByName(name);
-        if(pro.size()>0) {
-            return pro;
-        }
-        return ResponseEntity.status(404)
-                .body(Map.of("message","Product name = "+name+ " not found"));
-    }
-    
     @DeleteMapping({"{id}","id/{id}"})
     public Object deleteById(@PathVariable("id")Integer id) {
         var p = productRepo.findById(id);
@@ -112,37 +102,5 @@ public class MyController {
         }
         return ResponseEntity.status(HttpStatus.NOT_FOUND)
                 .body(Map.of("message","Product id = "+id+" not found"));
-    }
-
-    // ADD THIS DEBUG ENDPOINT
-    @GetMapping("/debug/files")
-    public Object debugFiles() {
-        try {
-            String uploadDir = System.getenv("DATABASE_URL") != null ? "/tmp/static" : "myApp/static";
-            java.io.File dir = new java.io.File(uploadDir);
-            
-            Map<String, Object> result = new java.util.HashMap<>();
-            result.put("uploadDir", uploadDir);
-            result.put("exists", dir.exists());
-            result.put("isDirectory", dir.isDirectory());
-            
-            if (dir.exists() && dir.isDirectory()) {
-                java.io.File[] files = dir.listFiles();
-                result.put("fileCount", files != null ? files.length : 0);
-                result.put("files", files != null ? 
-                    java.util.Arrays.stream(files)
-                        .map(file -> Map.of(
-                            "name", file.getName(),
-                            "size", file.length(),
-                            "url", "https://product-web-api.onrender.com/static/" + file.getName()
-                        ))
-                        .collect(java.util.stream.Collectors.toList()) 
-                    : java.util.List.of());
-            }
-            
-            return result;
-        } catch (Exception e) {
-            return Map.of("error", e.getMessage());
-        }
     }
 }
